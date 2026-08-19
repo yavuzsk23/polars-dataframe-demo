@@ -1,37 +1,46 @@
 import polars as pl
 from loguru import logger
 
-def polars_motorunu_atesle():
-    logger.info("Polars motoru Rust altyapısıyla başlatılıyor...")
 
-    # 1. Veri Seti Oluşturma (Faker'dan gelen veriler gibi düşün kanka)
-    # Polars veri yapısına 'DataFrame' denir.
-    veri = {
-        "Ajan_Adi": ["Yavuz", "Mete", "Hakan", "Asena", "Oğuz"],
-        "Departman": ["Siber Güvenlik", "Backend", "Siber Güvenlik", "Frontend", "Backend"],
-        "Kod_Hizi_Saniye": [120, 85, 150, 95, 110],
-        "Almanca_Seviyesi": ["B1", "A2", "B2", "A1", "B1"]
+def run_polars_demo():
+    logger.info("Initializing Polars engine (Rust-based backend)...")
+
+    # 1. Create a sample dataset (a Polars table is called a DataFrame)
+    data = {
+        "agent_name": ["Yavuz", "Mete", "Hakan", "Asena", "Oguz"],
+        "department": ["Security", "Backend", "Security", "Frontend", "Backend"],
+        "code_speed_seconds": [120, 85, 150, 95, 110],
+        "german_level": ["B1", "A2", "B2", "A1", "B1"],
     }
-    
-    # Veriyi Polars DataFrame'ine çeviriyoruz
-    df = pl.DataFrame(veri)
-    logger.success("Veri seti Polars DataFrame formatına başarıyla yüklendi!")
-    
-    # 2. Hızlıca Veriye Göz Atma
-    print("\n--- 📊 CYBERIA AKILLI VERİ TABLOSU ---")
+
+    df = pl.DataFrame(data)
+    logger.success("Dataset loaded into a Polars DataFrame.")
+
+    print("\n--- FULL DATA TABLE ---")
     print(df)
-    
-    # 3. SİBER FİLTRELEME (Sadece Siber Güvenlik departmanındakileri bulalım)
-    logger.info("Filtreleme işlemi başlatılıyor: Departman == Siber Güvenlik")
-    siber_ekip = df.filter(pl.col("Departman") == "Siber Güvenlik")
-    
-    print("\n--- 🛡️ SİBER GÜVENLİK EKİBİ ---")
-    print(siber_ekip)
-    
-    # 4. HIZLI ANALİZ (Ortalama Kod Yazma Hızını Bulma)
-    # Polars bunu işlemcinin tüm çekirdeklerini kullanarak şimşek gibi yapar
-    ortalama_hiz = df.select(pl.col("Kod_Hizi_Saniye").mean()).item()
-    logger.success(f"Analiz Tamamlandı! Ekibin Ortalama Kod Hızı: {ortalama_hiz:.2f} saniye.")
+
+    # 2. Filter: only rows from the Security department
+    logger.info("Filtering: department == 'Security'")
+    security_team = df.filter(pl.col("department") == "Security")
+
+    print("\n--- SECURITY TEAM ---")
+    print(security_team)
+
+    # 3. Group by department and compute average code speed per group
+    logger.info("Grouping by department, computing average speed...")
+    avg_by_department = (
+        df.group_by("department")
+        .agg(pl.col("code_speed_seconds").mean().alias("avg_speed_seconds"))
+        .sort("avg_speed_seconds")
+    )
+
+    print("\n--- AVERAGE SPEED BY DEPARTMENT (fastest first) ---")
+    print(avg_by_department)
+
+    # 4. Overall average code speed across the whole team
+    overall_avg = df.select(pl.col("code_speed_seconds").mean()).item()
+    logger.success(f"Analysis complete! Team average code speed: {overall_avg:.2f} seconds.")
+
 
 if __name__ == "__main__":
-    polars_motorunu_atesle()
+    run_polars_demo()
