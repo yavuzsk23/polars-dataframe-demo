@@ -37,6 +37,8 @@ python polars_demo.py
 ### How it works
 Polars DataFrames are built on Apache Arrow and a Rust execution engine, making operations like filtering and aggregation significantly faster than pandas on larger datasets. `pl.col("department")` creates a column expression used inside `.filter()` to select matching rows. `group_by("department").agg(...)` groups the data and computes the mean code speed per group, and `.sort(...)` orders the result for readability.
 
+Note: This project was developed with AI assistance as part of my learning process
+
 ---
 
 ## 🇩🇪 Deutsch
@@ -69,6 +71,8 @@ python polars_demo.py
 ### Funktionsweise
 Polars-DataFrames basieren auf Apache Arrow und einer Rust-Ausführungs-Engine, wodurch Operationen wie Filtern und Aggregation bei größeren Datensätzen deutlich schneller sind als bei pandas. `pl.col("department")` erstellt einen Spaltenausdruck, der innerhalb von `.filter()` verwendet wird, um passende Zeilen auszuwählen. `group_by("department").agg(...)` gruppiert die Daten und berechnet die durchschnittliche Code-Geschwindigkeit pro Gruppe, und `.sort(...)` ordnet das Ergebnis zur besseren Lesbarkeit.
 
+Hinweis: Dieses Projekt wurde im Rahmen meines Lernprozesses mit KI-Unterstützung entwickelt
+
 ---
 
 ## 🇹🇷 Türkçe
@@ -100,3 +104,5 @@ python polars_demo.py
 
 ### Nasıl çalışır?
 Polars DataFrame'leri Apache Arrow ve bir Rust çalıştırma motoru üzerine kuruludur, bu da filtreleme ve toplulaştırma gibi işlemleri büyük veri setlerinde pandas'a göre önemli ölçüde daha hızlı yapar. `pl.col("department")`, `.filter()` içinde eşleşen satırları seçmek için kullanılan bir sütun ifadesi oluşturur. `group_by("department").agg(...)` veriyi gruplar ve her grup için ortalama kod hızını hesaplar, `.sort(...)` ise sonucu okunabilirlik için sıralar.
+
+not: Bu proje öğrenme sürecimin bir parçası olarak yapay zeka desteğiyle geliştirilmiştir.
